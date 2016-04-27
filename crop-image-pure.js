@@ -237,6 +237,7 @@
         }
 
         function crop() {
+					  crop_img.crossOrigin = 'anonymous';
             cropWidth = crop_img.width * ratio;
             cropHeight = crop_img.height * ratio;
 
@@ -251,12 +252,17 @@
         }
 
         function openCropCanvasImg() {
-            crop();
-            var base64Img = resize_canvas.toDataURL("image/png");
-
+          crop();
+					
+					try {
+						var base64Img = resize_canvas.toDataURL("image/png", 1.0);
             window.open(base64Img);
+					} catch(e) {
+						alert(e);
+					} finally {
+						removeHandlers();
+					}
 
-            removeHandlers();
         }
     }
 
